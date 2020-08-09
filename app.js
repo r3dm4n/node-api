@@ -3,8 +3,19 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
+require('dotenv').config()
+const mongoose = require('mongoose')
+
 const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/orders')
+
+console.log(process.env.MONGO_PWD)
+
+const MONGODB_URI = `mongodb+srv://r3dm4n:${process.env.MONGO_PWD}@nodeapi.ocol2.mongodb.net/nodeAPI?retryWrites=true&w=majority`
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
